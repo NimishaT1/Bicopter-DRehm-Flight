@@ -26,7 +26,7 @@ This code defines the ESCs as servo motors and does not use the oneshot protocol
 `float GyroErrorX = 0;` <br>
 `float GyroErrorY= 0;` <br>
 `float GyroErrorZ = 0;` <br>
-3. Now uncomment the `calculate_IMU_error()` function in the void setup. Note the values you get in the serial monitor and paste them in place of the above 0 values of AccErrorX etc. <br>
+3. Now uncomment the `calculate_IMU_error()` function in the void setup and run the code. Note the values you get in the serial monitor and paste them in place of the above 0 values of AccErrorX etc. <br>
 4. Now you can uncomment `printGyroData()` to see the values from the gyroscope <br>
 
 ## Run the model
