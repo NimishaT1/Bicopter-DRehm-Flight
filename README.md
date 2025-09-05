@@ -1,4 +1,14 @@
 # Bicopter-DRehm-Flight 
+## Hardware Setup
+1. Teensy 4.0 flashed with the latest code<br>
+2. MPU 6050 gyroscope<br>
+`MPU6050 - Teensy`<br>
+`VCC - 3.3V`<br>
+`GND - GND`<br>
+`SCL - PIN 19 `<br>
+`SDA - PIN 18`<br>
+3. Servo Motors <br>
+
 
 ## Setup of RC
 This code defines the ESCs as servo motors and does not use the oneshot protocol. Can be used with regular ESCs like SimonK, Hobbywing, ReadytoSky etc.
