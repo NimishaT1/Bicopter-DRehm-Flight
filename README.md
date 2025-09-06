@@ -1,4 +1,6 @@
 # Bicopter-DRehm-Flight 
+This repo uses DRehm Flight on a Teensy to utilize it as a flight controller for a Bicopter. You can read the complete DRehm Flight Documentation here: https://github.com/nickrehm/dRehmFlight/tree/master <br><br>
+DRehm Flight uses OneShot Protocol, but this repo controls the ESCs by defining them as servo objects and sending PWM directly. Documentation of those changes can be found here: https://github.com/malhar-rajurkar/vtol-quadplane
 ## Hardware Setup
 1. Teensy 4.0 flashed with the latest code<br>
 2. MPU 6050 gyroscope<br>
