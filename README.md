@@ -10,7 +10,7 @@ DRehm Flight uses OneShot Protocol, but this repo controls the ESCs by defining 
 `SCL - PIN 19 `<br>
 `SDA - PIN 18`<br>
 3. Servo Motors - Connect power and gnd of servos to the 5V rail and gnd rail of teensy. Connect left servo to pin 6 on teensy and right servo to pin 7. <br>
-4. ESCs - Input of ECSs to the lipo battery and pins 0 and 1 on teensy. Output to the BLDCs <br> The teensy is powered with the BEC of the ESCs.
+4. ESCs - Input of ECSs to the lipo battery and pins 0 and 1 on teensy. Output to the BLDCs. The teensy is powered with the BEC of the ESCs.
 
 ## Setup of RC
 This code defines the ESCs as servo motors and does not use the oneshot protocol. Can be used with regular ESCs like SimonK, Hobbywing, ReadytoSky etc.
