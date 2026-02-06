@@ -462,12 +462,14 @@ void loop() {
 void controlMixer() {
 
   // ===== MOTORS: throttle + roll =====
+float idle = 0.10;   // start here (8%)
 
-  m1_command_scaled = thro_des + 0.5 * roll_PID;   // left motor
-  m2_command_scaled = thro_des - 0.5 * roll_PID;   // right motor
+m1_command_scaled = idle + thro_des + 0.5 * roll_PID;
+m2_command_scaled = idle + thro_des - 0.5 * roll_PID;
 
-  m1_command_scaled = constrain(m1_command_scaled, 0.0, 1.0);
-  m2_command_scaled = constrain(m2_command_scaled, 0.0, 1.0);
+m1_command_scaled = constrain(m1_command_scaled, 0.0, 1.0);
+m2_command_scaled = constrain(m2_command_scaled, 0.0, 1.0);
+
 
 
   // ===== SERVOS: pitch + yaw ONLY =====
