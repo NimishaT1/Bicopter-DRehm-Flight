@@ -147,6 +147,16 @@ static const uint8_t num_DSM_channels = 6; //If using DSM RX, change this to mat
 //                                               USER-SPECIFIED VARIABLES                                                 //                           
 //========================================================================================================================//
 
+
+// ================= BATTERY VOLTAGE SENSING =================
+const int VOLTAGE_PIN = 14;        // A0 on Teensy
+const float ADC_REF = 5.0;         // Teensy ADC reference (USB 5V)
+const float DIVIDER_RATIO = 5.0;   // Voltage sensor module (≈5:1)
+const float CAL_FACTOR = 1.53;     // Calibrated by measurement
+
+float batteryVoltage = 0.0;
+
+
 //Radio failsafe values for every channel in the event that bad reciever data is detected. Recommended defaults:
 unsigned long channel_1_fs = 1000; //thro
 unsigned long channel_2_fs = 1500; //ail
@@ -378,6 +388,24 @@ void setup() {
 
 }
 
+float readBatteryVoltage() {
+  static float filteredVoltage = 0.0;
+
+  int raw = analogRead(VOLTAGE_PIN);
+
+  float voltage =
+    (raw / 1023.0) *
+    ADC_REF *
+    DIVIDER_RATIO /
+    CAL_FACTOR;
+
+  // Low-pass filter (safe for flight loop)
+  filteredVoltage = 0.9 * filteredVoltage + 0.1 * voltage;
+
+  return filteredVoltage;
+}
+
+
 
 
 //========================================================================================================================//
@@ -394,7 +422,7 @@ void loop() {
 
   //Print data at 100hz (uncomment one at a time for troubleshooting) - SELECT ONE:
   //printRadioData();     //Prints radio pwm values (expected: 1000 to 2000)
-  printDesiredState();  //Prints desired vehicle state commanded in either degrees or deg/sec (expected: +/- maxAXIS for roll, pitch, yaw; 0 to 1 for throttle)
+  //printDesiredState();  //Prints desired vehicle state commanded in either degrees or deg/sec (expected: +/- maxAXIS for roll, pitch, yaw; 0 to 1 for throttle)
   //printGyroData();      //Prints filtered gyro data direct from IMU (expected: ~ -250 to 250, 0 at rest)
   //printAccelData();     //Prints filtered accelerometer data direct from IMU (expected: ~ -2 to 2; x,y 0 when level, z 1 when level)
   //printMagData();       //Prints filtered magnetometer data direct from IMU (expected: ~ -300 to 300)
@@ -452,11 +480,26 @@ void loop() {
 
   sendTelemetryESP();
 
+  batteryVoltage = readBatteryVoltage();
+
+
+  static unsigned long vTimer = 0;
+  if (millis() - vTimer > 500) {
+   vTimer = millis();
+   Serial.print("Battery Voltage: ");
+   Serial.println(batteryVoltage, 2);
+  }
+
+
+
 }
 
 //========================================================================================================================//
 //                                                      FUNCTIONS                                                         //                           
 //========================================================================================================================//
+
+
+
 
 
 void controlMixer() {
